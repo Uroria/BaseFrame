@@ -68,13 +68,13 @@ public final class AsyncTaskFactory {
         @Override
         public void run(@NotNull Consumer<? super T> success, @NotNull Consumer<? super Throwable> error) {
             CompletableFuture<T> future = time == 0 ? submit() : submitLater(time, timeUnit);
-            future.whenComplete((onSuccess, onError) -> {
+            future.whenComplete((onSuccess, onError) -> backSync.execute(() -> {
                 if (future.isCompletedExceptionally()) {
                     error.accept(onError);
                     return;
                 }
                 success.accept(onSuccess);
-            });
+            }));
         }
 
         @Override
@@ -103,15 +103,19 @@ public final class AsyncTaskFactory {
             AtomicReference<ScheduledFuture<?>> scheduledFuture = new AtomicReference<ScheduledFuture<?>>(null);
             AtomicInteger counter = new AtomicInteger(1);
             scheduledFuture.set(executorService.scheduleAtFixedRate(() -> {
-                CompletableFuture<T> future = new CompletableFuture<T>();
+
+                var future = new CompletableFuture<T>();
                 processFuture(future, counter.getAndIncrement());
-                future.whenComplete((result, throwable) -> {
+
+                future.whenComplete(((result, throwable) -> backSync.execute(() -> {
                     if (future.isCompletedExceptionally()) {
                         error.accept(throwable, scheduledFuture.get());
                         return;
                     }
+
                     success.accept(result, scheduledFuture.get());
-                });
+                })));
+
             }, time, time, timeUnit));
         }
 
@@ -133,7 +137,7 @@ public final class AsyncTaskFactory {
         }
 
         private void onError(Throwable throwable) {
-            logger.error("Unhandled Exception in KebabTask", throwable);
+            logger.error("Unhandled Exception in AsyncTask", throwable);
         }
     }
 }
