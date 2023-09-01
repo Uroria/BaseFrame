@@ -1,22 +1,14 @@
 package com.uroria.base.user;
 
 import com.uroria.base.lang.Language;
-import com.uroria.base.permission.PermState;
+import com.uroria.base.permission.UroriaPermHolder;
 import com.uroria.base.property.PropertyObject;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
 
-public interface UroriaUser extends PropertyObject {
-
-    boolean hasPermission(@Nullable String node);
-
-    @NotNull PermState getPermissionState(@Nullable String node);
+public interface UroriaUser extends PropertyObject, UroriaPermHolder {
 
     @NotNull String getUsername();
-
-    @NotNull UUID getUniqueId();
 
     @NotNull Language getLanguage();
 

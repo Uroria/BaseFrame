@@ -34,11 +34,23 @@ val fastUtilVersion: String by project.extra
 val fastConfigVersion: String by project.extra
 val adventureVersion: String by project.extra
 val guavaVersion: String by project.extra
+val log4jVersion: String by project.extra
+val slf4jVersion: String by project.extra
+
 dependencies {
     api("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
     api("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+    api("org.slf4j:slf4j-api:$slf4jVersion")
+
+    implementation("org.apache.logging.log4j:log4j-api:${log4jVersion}")
+    implementation("org.apache.logging.log4j:log4j-core:${log4jVersion}")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:${log4jVersion}")
+    implementation("org.apache.logging.log4j:log4j-iostreams:${log4jVersion}")
+    implementation("org.apache.logging.log4j:log4j-jul:${log4jVersion}")
+
 
     api("it.unimi.dsi:fastutil:${fastUtilVersion}")
 
