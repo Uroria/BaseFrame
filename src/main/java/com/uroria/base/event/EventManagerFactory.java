@@ -21,11 +21,16 @@ public final class EventManagerFactory {
         return new EventManagerImpl(name, listeners);
     }
 
-    @AllArgsConstructor
     private static final class EventManagerImpl implements EventManager {
         private final String name;
         private final Object2ObjectMap<Class<?>, ObjectList<Listener<?>>> listeners;
-        private final Logger logger = LoggerFactory.getLogger(name);
+        private final Logger logger;
+
+        public EventManagerImpl(String name, Object2ObjectMap<Class<?>, ObjectList<Listener<?>>> listeners) {
+            this.name = name;
+            this.listeners = listeners;
+            this.logger = LoggerFactory.getLogger(name);
+        }
 
         @Override
         public void subscribe(@NonNull Listener<?> listener) {

@@ -31,7 +31,6 @@ public final class SchedulerFactory {
         private final Executor backSync;
         private final ScheduledExecutorService executorService;
 
-
         @Override
         public <T> AsyncTask<T> runTask(@NotNull Supplier<? extends T> action) {
             return AsyncTaskFactory.create(this.name, this.executorService, action, backSync);
