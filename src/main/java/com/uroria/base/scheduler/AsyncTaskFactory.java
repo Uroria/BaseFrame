@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,41 +23,42 @@ import java.util.function.Supplier;
 
 public final class AsyncTaskFactory {
 
-    public static <T> AsyncTask<T> create(@NonNull String name, @NonNull ScheduledExecutorService service, @NonNull Supplier<? extends T> supplier) {
-        return new AsyncTaskImpl<>(supplier, service, LoggerFactory.getLogger(name));
+    public static <T> AsyncTask<T> create(@NonNull String name, @NonNull ScheduledExecutorService service, @NonNull Supplier<? extends T> supplier, Executor backSync) {
+        return new AsyncTaskImpl<>(supplier, service, LoggerFactory.getLogger(name), backSync);
     }
 
-    public static <T> AsyncTask<T> create(@NonNull String name, @NonNull ScheduledExecutorService service, @NonNull Supplier<? extends T> supplier, long time, @NonNull TimeUnit timeUnit) {
-        return new AsyncTaskImpl<>(supplier, time, timeUnit, service, LoggerFactory.getLogger(name));
+    public static <T> AsyncTask<T> create(@NonNull String name, @NonNull ScheduledExecutorService service, @NonNull Supplier<? extends T> supplier, long time, @NonNull TimeUnit timeUnit, Executor backSync) {
+        return new AsyncTaskImpl<>(supplier, time, timeUnit, service, LoggerFactory.getLogger(name), backSync);
     }
 
-    public static <T> AsyncTask<T> create(@NonNull String name, @NonNull ScheduledExecutorService service, @NonNull Function<Integer, ? extends T> function, long time, @NonNull TimeUnit timeUnit) {
-        return new AsyncTaskImpl<>(service, LoggerFactory.getLogger(name), function, time, timeUnit);
+    public static <T> AsyncTask<T> create(@NonNull String name, @NonNull ScheduledExecutorService service, @NonNull Function<Integer, ? extends T> function, long time, @NonNull TimeUnit timeUnit, Executor backSync) {
+        return new AsyncTaskImpl<>(service, backSync, LoggerFactory.getLogger(name), function, time, timeUnit);
     }
 
     private static final class AsyncTaskImpl<T> implements AsyncTask<T> {
         private final ScheduledExecutorService executorService;
+        private final Executor backSync;
         private final Logger logger;
         private final Function<Integer, ? extends T> function;
         private final long time;
         private final TimeUnit timeUnit;
 
-        private AsyncTaskImpl(Supplier<? extends T> supplier, ScheduledExecutorService executorService, Logger logger) {
-            this(executorService, logger, ignored -> supplier.get(), 0, TimeUnit.MILLISECONDS);
+        private AsyncTaskImpl(Supplier<? extends T> supplier, ScheduledExecutorService executorService, Logger logger, Executor backSync) {
+            this(executorService, backSync, logger, ignored -> supplier.get(), 0, TimeUnit.MILLISECONDS);
         }
 
-        private AsyncTaskImpl(Supplier<? extends T> supplier, long time, TimeUnit timeUnit, ScheduledExecutorService executorService, Logger logger) {
-            this(executorService, logger, ignored -> supplier.get(), time, timeUnit);
+        private AsyncTaskImpl(Supplier<? extends T> supplier, long time, TimeUnit timeUnit, ScheduledExecutorService executorService, Logger logger, Executor backSync) {
+            this(executorService, backSync, logger, ignored -> supplier.get(), time, timeUnit);
         }
 
-        private AsyncTaskImpl(ScheduledExecutorService executorService, Logger logger, Function<Integer, ? extends T> function, long time, TimeUnit timeUnit) {
+        private AsyncTaskImpl(ScheduledExecutorService executorService, Executor backSync, Logger logger, Function<Integer, ? extends T> function, long time, TimeUnit timeUnit) {
             this.executorService = executorService;
+            this.backSync = backSync;
             this.logger = logger;
             this.function = function;
             this.time = time;
             this.timeUnit = timeUnit;
         }
-
 
         @Override
         public void run(@NotNull Consumer<? super T> success) {
