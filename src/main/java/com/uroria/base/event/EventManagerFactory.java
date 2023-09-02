@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +56,7 @@ public final class EventManagerFactory {
         @Override
         public <E> E call(@NonNull E event) {
             ObjectList<Listener<?>> listeners = this.listeners.get(event.getClass());
+            if (listeners == null) return event;
             for (Listener<?> listener : listeners) {
                 try {
                     Listener<E> correctListener = (Listener<E>) listener;
