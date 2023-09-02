@@ -4,6 +4,11 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 group = "com.uroria"
 version = project.properties["projectVersion"].toString()
 
