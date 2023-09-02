@@ -2,8 +2,11 @@ package com.uroria.base.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.experimental.UtilityClass;
 
-public final class GsonFactory {
+@UtilityClass
+public class GsonFactory {
+
     public Gson create() {
         GsonBuilder builder = new GsonBuilder();
         builder.disableHtmlEscaping();
