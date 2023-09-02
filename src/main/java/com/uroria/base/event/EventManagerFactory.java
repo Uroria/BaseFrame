@@ -16,27 +16,26 @@ public final class EventManagerFactory {
         return new EventManagerImpl(name, new Object2ObjectArrayMap<>());
     }
 
-    public static EventManager create(@NonNull String name, @NonNull Object2ObjectMap<Class<?>, ObjectList<Listener<?>>> listeners) {
+    public static EventManager create(@NonNull String name, @NonNull Object2ObjectMap<String, ObjectList<Listener<?>>> listeners) {
         return new EventManagerImpl(name, listeners);
     }
 
     private static final class EventManagerImpl implements EventManager {
-        private final String name;
-        private final Object2ObjectMap<Class<?>, ObjectList<Listener<?>>> listeners;
+        private final Object2ObjectMap<String, ObjectList<Listener<?>>> listeners;
         private final Logger logger;
 
-        public EventManagerImpl(String name, Object2ObjectMap<Class<?>, ObjectList<Listener<?>>> listeners) {
-            this.name = name;
+        public EventManagerImpl(String name, Object2ObjectMap<String, ObjectList<Listener<?>>> listeners) {
             this.listeners = listeners;
             this.logger = LoggerFactory.getLogger(name);
         }
 
         @Override
-        public void subscribe(@NonNull Listener<?> listener) {
-            ObjectList<Listener<?>> listeners = this.listeners.get(listener.getType());
+        public <E> void subscribe(@NonNull Listener<E> listener) {
+            String name = listener.getType().getName();
+            ObjectList<Listener<?>> listeners = this.listeners.get(name);
             if (listeners == null) {
                 listeners = new ObjectArrayList<>();
-                this.listeners.put(listener.getType(), listeners);
+                this.listeners.put(name, listeners);
             }
             listeners.add(listener);
         }
@@ -55,7 +54,7 @@ public final class EventManagerFactory {
 
         @Override
         public <E> E call(@NonNull E event) {
-            ObjectList<Listener<?>> listeners = this.listeners.get(event.getClass());
+            ObjectList<Listener<?>> listeners = this.listeners.get(event.getClass().getName());
             if (listeners == null) return event;
             for (Listener<?> listener : listeners) {
                 try {

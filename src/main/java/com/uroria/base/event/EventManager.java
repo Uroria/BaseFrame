@@ -4,7 +4,7 @@ import lombok.NonNull;
 
 public interface EventManager {
 
-    void subscribe(@NonNull Listener<?> listener);
+    <E> void subscribe(@NonNull Listener<E> listener);
 
     void unsubscribe(@NonNull Class<Listener<?>> listenerClass);
 
