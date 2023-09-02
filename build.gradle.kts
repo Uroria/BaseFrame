@@ -36,6 +36,7 @@ val adventureVersion: String by project.extra
 val guavaVersion: String by project.extra
 val log4jVersion: String by project.extra
 val slf4jVersion: String by project.extra
+val sentryVersion: String by project.extra
 
 dependencies {
     api("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
@@ -51,7 +52,6 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-iostreams:${log4jVersion}")
     implementation("org.apache.logging.log4j:log4j-jul:${log4jVersion}")
 
-
     api("it.unimi.dsi:fastutil:${fastUtilVersion}")
 
     api("com.google.code.gson:gson:${guavaVersion}")
@@ -63,6 +63,8 @@ dependencies {
     api("net.kyori:adventure-text-minimessage:${adventureVersion}")
     api("net.kyori:adventure-text-serializer-plain:${adventureVersion}")
     api("net.kyori:adventure-text-serializer-legacy:${adventureVersion}")
+
+    api("io.sentry:sentry:${sentryVersion}")
 }
 
 java {
