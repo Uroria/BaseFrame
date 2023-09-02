@@ -6,7 +6,8 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class SentryInstance {
-    private final String dsn = GeneralConfiguration.getConfig().getString("sentryDsn");
+    private final boolean enabled = GeneralConfiguration.getConfig().getBoolean("sentry.enabled");
+    private final String dsn = GeneralConfiguration.getConfig().getString("sentry.dsn");
 
     public void initialize() {
         Sentry.init(option -> {
