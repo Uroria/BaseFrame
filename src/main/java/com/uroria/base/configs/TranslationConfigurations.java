@@ -46,7 +46,7 @@ public class TranslationConfigurations {
         if (lang == null) return key + "-nil";
         try {
             Json config = getConfig(lang, key);
-            key = key.substring(2);
+            if (key.startsWith("..")) key = key.substring(2);
             if (config == null) return key + "-" + lang;
             return config.getOrSetDefault(key, key);
         } catch (Exception exception) {
@@ -59,7 +59,7 @@ public class TranslationConfigurations {
         if (lang == null) return ObjectLists.singleton(key + "-nil");
         try {
             Json config = getConfig(lang, key);
-            key = key.substring(2);
+            if (key.startsWith("..")) key = key.substring(2);
             if (config == null) return ObjectLists.singleton(key + "-" + lang);
             return config.getOrSetDefault(key, ObjectLists.singleton(key));
         } catch (Exception exception) {
