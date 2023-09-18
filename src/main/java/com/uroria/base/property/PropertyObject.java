@@ -1,30 +1,60 @@
 package com.uroria.base.property;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
+import java.util.Map;
 
 public interface PropertyObject {
-    void setProperty(@NonNull String key, @NonNull String value);
+    Map<String, Object> getProperties();
 
-    void setProperty(@NonNull String key, boolean value);
+    void setProperties(@NonNull Map<String, Object> properties);
+
+    void setProperty(@NonNull String key, @NonNull String value);
 
     void setProperty(@NonNull String key, int value);
 
     void setProperty(@NonNull String key, long value);
 
-    void unsetProperty(@NonNull String key);
+    void setProperty(@NonNull String key, double value);
 
-    Optional<String> getPropertyString(@NonNull String key);
+    void setProperty(@NonNull String key, float value);
 
-    Optional<Integer> getPropertyInt(@NonNull String key);
+    void setProperty(@NonNull String key, boolean value);
 
-    boolean getPropertyBoolean(@NonNull String key);
+    default @Nullable String getPropertyString(@NonNull String key) {
+        return getPropertyStringOrElse(key, null);
+    }
 
-    Optional<Long> getPropertyLong(@NonNull String key);
+    String getPropertyStringOrElse(@NonNull String key, @Nullable String defValue);
 
-    Object2ObjectMap<String, Object> getProperties();
+    default int getPropertyInt(@NonNull String key) {
+        return getPropertyIntOrElse(key, 0);
+    }
 
-    void setProperties(@NonNull Object2ObjectMap<String, Object> properties);
+    int getPropertyIntOrElse(@NonNull String key, int defValue);
+
+    default long getPropertyLong(@NonNull String key) {
+        return getPropertyLongOrElse(key, 0L);
+    }
+
+    long getPropertyLongOrElse(@NonNull String key, long defValue);
+
+    default double getPropertyDouble(@NonNull String key) {
+        return getPropertyDoubleOrElse(key, 0d);
+    }
+
+    double getPropertyDoubleOrElse(@NonNull String key, double defValue);
+
+    default float getPropertyFloat(@NonNull String key) {
+        return getPropertyFloatOrElse(key, 0f);
+    }
+
+    float getPropertyFloatOrElse(@NonNull String key, float defValue);
+
+    default boolean getPropertyBoolean(@NonNull String key) {
+        return getPropertyBooleanOrElse(key, false);
+    }
+
+    boolean getPropertyBooleanOrElse(@NonNull String key, boolean defValue);
 }
