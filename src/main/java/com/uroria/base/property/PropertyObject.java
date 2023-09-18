@@ -8,6 +8,8 @@ import java.util.Map;
 public interface PropertyObject {
     Map<String, Object> getProperties();
 
+    void unsetProperty(@NonNull String key);
+
     void setProperties(@NonNull Map<String, Object> properties);
 
     void setProperty(@NonNull String key, @NonNull String value);
