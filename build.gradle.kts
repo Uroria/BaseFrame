@@ -37,6 +37,8 @@ val lombokVersion: String by project.extra
 val jsonVersion: String by project.extra
 val fastUtilVersion: String by project.extra
 val fastConfigVersion: String by project.extra
+val pablosAnnotationsVersion: String by project.extra
+val problemoVersion: String by project.extra
 val adventureVersion: String by project.extra
 val guavaVersion: String by project.extra
 val log4jVersion: String by project.extra
@@ -62,6 +64,10 @@ dependencies {
     api("com.google.code.gson:gson:${guavaVersion}")
 
     api("com.uroria:FastConfig:${fastConfigVersion}")
+
+    api("com.uroria:Problemo:${problemoVersion}")
+
+    api("com.uroria:PablosAnnotations:${pablosAnnotationsVersion}")
 
     api("net.kyori:adventure-api:${adventureVersion}")
     api("net.kyori:adventure-text-serializer-gson:${adventureVersion}")
