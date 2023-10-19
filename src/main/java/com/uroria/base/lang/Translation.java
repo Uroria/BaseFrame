@@ -1,7 +1,6 @@
 package com.uroria.base.lang;
 
 import com.uroria.base.configs.TranslationConfigurations;
-import com.uroria.base.user.UroriaUser;
 import com.uroria.base.utils.ComponentUtils;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
@@ -20,11 +19,11 @@ public class Translation {
         return component(language, key, null);
     }
 
-    public Component component(UroriaUser user, String key, TagResolver resolver) {
+    public Component component(Languageable user, String key, TagResolver resolver) {
         return component(user.getLanguage(), key, resolver);
     }
 
-    public Component component(UroriaUser user, String key) {
+    public Component component(Languageable user, String key) {
         return component(user.getLanguage(), key, null);
     }
 
@@ -36,11 +35,11 @@ public class Translation {
         return string(language, key, null);
     }
 
-    public String string(UroriaUser user, String key, TagResolver resolver) {
+    public String string(Languageable user, String key, TagResolver resolver) {
         return string(user.getLanguage(), key, resolver);
     }
 
-    public String string(UroriaUser user, String key) {
+    public String string(Languageable user, String key) {
         return string(user.getLanguage(), key, null);
     }
 
@@ -52,11 +51,11 @@ public class Translation {
         return components(language, key, null);
     }
 
-    public Component[] components(UroriaUser user, String key, TagResolver resolver) {
+    public Component[] components(Languageable user, String key, TagResolver resolver) {
         return components(user.getLanguage(), key, resolver);
     }
 
-    public Component[] components(UroriaUser user, String key) {
+    public Component[] components(Languageable user, String key) {
         return components(user.getLanguage(), key, null);
     }
 
@@ -68,11 +67,11 @@ public class Translation {
         return strings(language, key, null);
     }
 
-    public String[] strings(UroriaUser user, String key, TagResolver resolver) {
+    public String[] strings(Languageable user, String key, TagResolver resolver) {
         return strings(user.getLanguage(), key, resolver);
     }
 
-    public String[] strings(UroriaUser user, String key) {
+    public String[] strings(Languageable user, String key) {
         return strings(user.getLanguage(), key);
     }
 }
