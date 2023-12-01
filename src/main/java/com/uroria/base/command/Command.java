@@ -15,7 +15,9 @@ public abstract class Command {
     @Getter protected final String name;
     @Getter protected final String permission;
     protected final List<String> aliases;
+    @Getter
     private final ExecuteAdapter executeAdapter;
+    @Getter
     private final OfferAdapter offerAdapter;
     private final Collection<Command> children;
 
