@@ -29,7 +29,7 @@ public abstract class ExecuteAdapter {
         }
     }
 
-    protected abstract boolean execute(@NonNull Commander commander, @NonNull Map<String, String> arguments);
+    protected abstract boolean execute(@NonNull Commander commander, @NonNull String[] args, @NonNull Map<String, String> arguments);
 
     public final boolean execute(@NonNull Commander commander,
                               @NonNull String[] args,
@@ -38,7 +38,7 @@ public abstract class ExecuteAdapter {
         int length = args.length;
         if (length == 0) {
             if (index == 0) {
-                execute(commander, arguments);
+                execute(commander, args, arguments);
             }
             return true;
         }
@@ -47,7 +47,7 @@ public abstract class ExecuteAdapter {
             arguments.put(this.name, current);
         }
 
-        boolean finish = execute(commander, arguments);
+        boolean finish = execute(commander, args, arguments);
         if (finish) return true;
 
         for (ExecuteAdapter child : this.children) {

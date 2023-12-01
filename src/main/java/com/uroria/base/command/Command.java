@@ -26,8 +26,8 @@ public abstract class Command {
         this.children = new ObjectArrayList<>(children);
         this.executeAdapter = new ExecuteAdapter(name) {
             @Override
-            protected boolean execute(@NonNull Commander commander, @NonNull Map<String, String> arguments) {
-                return getSelf().execute(commander, arguments);
+            protected boolean execute(@NonNull Commander commander, @NonNull String[] args, @NonNull Map<String, String> arguments) {
+                return getSelf().execute(commander, args, arguments);
             }
         };
         this.offerAdapter = new OfferAdapter() {
@@ -66,6 +66,7 @@ public abstract class Command {
      * @return If true, no child commands will be executed.
      */
     protected abstract boolean execute(@NonNull Commander commander,
+                                       @NonNull String[] args,
                                        @NonNull Map<String, String> arguments);
 
     protected abstract void offer(@NonNull Commander commander,

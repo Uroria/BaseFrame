@@ -11,7 +11,7 @@ public final class DefaultExecuteAdapter extends ExecuteAdapter {
     }
 
     @Override
-    protected boolean execute(@NonNull Commander commander, @NonNull Map<String, String> arguments) {
+    protected boolean execute(@NonNull Commander commander, @NonNull String[] args, @NonNull Map<String, String> arguments) {
         return true;
     }
 }
