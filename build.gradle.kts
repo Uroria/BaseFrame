@@ -43,25 +43,18 @@ val adventureVersion: String by project.extra
 val guavaVersion: String by project.extra
 val log4jVersion: String by project.extra
 val slf4jVersion: String by project.extra
-val sentryVersion: String by project.extra
 
 dependencies {
-    api("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
-    api("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
-    api("org.slf4j:slf4j-api:$slf4jVersion")
+    compileOnly("org.slf4j:slf4j-api:$slf4jVersion")
 
-    implementation("org.apache.logging.log4j:log4j-api:${log4jVersion}")
-    implementation("org.apache.logging.log4j:log4j-core:${log4jVersion}")
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:${log4jVersion}")
-    implementation("org.apache.logging.log4j:log4j-iostreams:${log4jVersion}")
-    implementation("org.apache.logging.log4j:log4j-jul:${log4jVersion}")
+    implementation("it.unimi.dsi:fastutil:${fastUtilVersion}")
 
-    api("it.unimi.dsi:fastutil:${fastUtilVersion}")
-
-    api("com.google.code.gson:gson:${guavaVersion}")
+    implementation("com.google.code.gson:gson:${guavaVersion}")
 
     api("com.uroria:FastConfig:${fastConfigVersion}")
 
@@ -69,13 +62,11 @@ dependencies {
 
     api("com.uroria:PablosAnnotations:${pablosAnnotationsVersion}")
 
-    api("net.kyori:adventure-api:${adventureVersion}")
-    api("net.kyori:adventure-text-serializer-gson:${adventureVersion}")
-    api("net.kyori:adventure-text-minimessage:${adventureVersion}")
-    api("net.kyori:adventure-text-serializer-plain:${adventureVersion}")
-    api("net.kyori:adventure-text-serializer-legacy:${adventureVersion}")
-
-    api("io.sentry:sentry:${sentryVersion}")
+    implementation("net.kyori:adventure-api:${adventureVersion}")
+    implementation("net.kyori:adventure-text-serializer-gson:${adventureVersion}")
+    implementation("net.kyori:adventure-text-minimessage:${adventureVersion}")
+    implementation("net.kyori:adventure-text-serializer-plain:${adventureVersion}")
+    implementation("net.kyori:adventure-text-serializer-legacy:${adventureVersion}")
 }
 
 java {
