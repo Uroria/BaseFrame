@@ -45,16 +45,16 @@ val log4jVersion: String by project.extra
 val slf4jVersion: String by project.extra
 
 dependencies {
-    compileOnly("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
-    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    api("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
+    api("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
-    compileOnly("org.slf4j:slf4j-api:$slf4jVersion")
+    api("org.slf4j:slf4j-api:$slf4jVersion")
 
-    implementation("it.unimi.dsi:fastutil:${fastUtilVersion}")
+    api("it.unimi.dsi:fastutil:${fastUtilVersion}")
 
-    implementation("com.google.code.gson:gson:${guavaVersion}")
+    api("com.google.code.gson:gson:${guavaVersion}")
 
     api("com.uroria:FastConfig:${fastConfigVersion}")
 
@@ -62,11 +62,11 @@ dependencies {
 
     api("com.uroria:PablosAnnotations:${pablosAnnotationsVersion}")
 
-    implementation("net.kyori:adventure-api:${adventureVersion}")
-    implementation("net.kyori:adventure-text-serializer-gson:${adventureVersion}")
-    implementation("net.kyori:adventure-text-minimessage:${adventureVersion}")
-    implementation("net.kyori:adventure-text-serializer-plain:${adventureVersion}")
-    implementation("net.kyori:adventure-text-serializer-legacy:${adventureVersion}")
+    api("net.kyori:adventure-api:${adventureVersion}")
+    api("net.kyori:adventure-text-serializer-gson:${adventureVersion}")
+    api("net.kyori:adventure-text-minimessage:${adventureVersion}")
+    api("net.kyori:adventure-text-serializer-plain:${adventureVersion}")
+    api("net.kyori:adventure-text-serializer-legacy:${adventureVersion}")
 }
 
 java {
