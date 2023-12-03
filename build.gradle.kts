@@ -45,8 +45,8 @@ val log4jVersion: String by project.extra
 val slf4jVersion: String by project.extra
 
 dependencies {
-    api("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
-    api("org.projectlombok:lombok:${lombokVersion}")
+    compileOnlyApi("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
+    compileOnlyApi("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
